@@ -27,6 +27,7 @@ public class GetquestionUrlProcessor implements PageProcessor
     // 设置编码 ，超时时间，重试次数，
     private Site site = Site.me().setRetryTimes(10).setSleepTime(5000).setTimeOut(5000)
             .addCookie("Domain", "zhihu.com")
+            // 这里网页上很多cokkie可以随便写一个，注意key value的对应
             .addCookie("z_c0", "Mi4xdEhDWUF3QUFBQUFBRU1KTm9JRVhEQmNBQUFCaEFsVk55Y2pFV1FDQnZGWW1sV2hteUlwX1FqT1pZa3dzVHJLdUJn|1503476681|a84bd8d945834827b82ebc77c65957ab4a793a49")
             .setUserAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36");
     //问题的索引
