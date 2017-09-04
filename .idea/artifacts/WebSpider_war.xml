@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="WebSpider:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="WebSpider-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="WebSpider:war exploded" />
+    </root>
+  </artifact>
+</component>
