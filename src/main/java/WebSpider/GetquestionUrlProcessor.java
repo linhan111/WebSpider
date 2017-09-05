@@ -78,7 +78,6 @@ public class GetquestionUrlProcessor implements PageProcessor
                     e.printStackTrace();
                 }
             });
-
         }
         else
         {
@@ -114,7 +113,7 @@ public class GetquestionUrlProcessor implements PageProcessor
         int len;
         // 输出的文件流
         File sf = new File(savePath + "/" + filename);
-//		if(!sf.exists()){
+//		if(!sf.exists()){ // 文件夹不存在即创建
 //			sf.mkdirs();
 //		}
         OutputStream os = new FileOutputStream(sf);
@@ -126,13 +125,12 @@ public class GetquestionUrlProcessor implements PageProcessor
         // 完毕，关闭所有链接
         os.close();
         is.close();
-
     }
 
     // main方法做为入口
     public static void main(String[] args)
     {
-        questionId = "50410582";
+        questionId = "37787176";
         Site site = new Site();
         site.setCharset("UTF-8");
         Spider.create(new GetquestionUrlProcessor())
@@ -140,6 +138,5 @@ public class GetquestionUrlProcessor implements PageProcessor
 //				.addPipeline(new GetquestionUrlPipeline())
                 .thread(20)
                 .run();
-
     }
 }
