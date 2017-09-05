@@ -69,8 +69,8 @@ public class GetquestionUrlProcessor implements PageProcessor
                 try
                 {
                     url = URLDecoder.decode(url, "UTf-8");
-                    downloadPicture(url, filePath, String.format(RandomStringUtils.random(5))
-                            + url.substring(url.lastIndexOf("."), url.length()));
+                    downloadPicture(url, filePath, RandomStringUtils.randomNumeric(5)
+                            + url.substring(url.lastIndexOf(".")));
                     i[0]++;
                 }
                 catch (Exception e)
@@ -138,7 +138,7 @@ public class GetquestionUrlProcessor implements PageProcessor
         Spider.create(new GetquestionUrlProcessor())
                 .addUrl("https://www.zhihu.com/question/" + questionId)
 //				.addPipeline(new GetquestionUrlPipeline())
-                .thread(10)
+                .thread(20)
                 .run();
 
     }
