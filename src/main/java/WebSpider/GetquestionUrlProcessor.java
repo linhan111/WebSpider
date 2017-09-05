@@ -15,13 +15,13 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.List;
 
-
 /**
- * description:爬取zhihu.com上指定问题的图片
+ * Description:爬取zhihu.com上指定问题的图片
  * <p>
  * Created by lhan On 2017/9/4 10:06
  */
-// @slf4j 日志记录
+
+// 程序会产生MalformedURLException，但不影响程序运行结果，个人分析为网络数据包产生的异常
 public class GetquestionUrlProcessor implements PageProcessor
 {
     // 设置编码 ，超时时间，重试次数，
@@ -106,7 +106,6 @@ public class GetquestionUrlProcessor implements PageProcessor
         con.setConnectTimeout(5 * 1000);
         // 输入流
         InputStream is = con.getInputStream();
-
         // 1K的数据缓冲
         byte[] bs = new byte[1024];
         // 读取到的数据长度
@@ -135,7 +134,7 @@ public class GetquestionUrlProcessor implements PageProcessor
         site.setCharset("UTF-8");
         Spider.create(new GetquestionUrlProcessor())
                 .addUrl("https://www.zhihu.com/question/" + questionId)
-//				.addPipeline(new GetquestionUrlPipeline())
+                //				.addPipeline(new GetquestionUrlPipeline())
                 .thread(20)
                 .run();
     }
