@@ -69,7 +69,7 @@ public class GetquestionUrlProcessor implements PageProcessor
                 try
                 {
                     url = URLDecoder.decode(url, "UTf-8");
-                    downloadPicture(url, filePath, RandomStringUtils.randomNumeric(5)
+                    downloadPicture(url, filePath, RandomStringUtils.randomNumeric(7) // 使用RandomStringUtils.random(5)在中文环境下是乱码
                             + url.substring(url.lastIndexOf(".")));
                     i[0]++;
                 }
