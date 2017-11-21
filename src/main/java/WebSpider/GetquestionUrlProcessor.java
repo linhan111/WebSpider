@@ -1,19 +1,18 @@
 package WebSpider;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import org.apache.commons.lang3.RandomStringUtils;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.JsonPathSelector;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Description:爬取zhihu.com上指定问题的图片
@@ -69,7 +68,8 @@ public class GetquestionUrlProcessor implements PageProcessor
                 try
                 {
                     url = URLDecoder.decode(url, "UTf-8");
-                    downloadPicture(url, filePath, RandomStringUtils.randomNumeric(7) // 使用RandomStringUtils.random(5)在中文环境下是乱码
+                    // 使用RandomStringUtils.random(5)在中文环境下是乱码
+                    downloadPicture(url, filePath, RandomStringUtils.randomNumeric(7)
                             + url.substring(url.lastIndexOf(".")));
                     i[0]++;
                 }
@@ -98,32 +98,44 @@ public class GetquestionUrlProcessor implements PageProcessor
 
     public static void downloadPicture(String urlString, String savePath, String filename) throws Exception
     {
-        // 构造URL
-        URL url = new URL(urlString);
-        // 打开连接
-        URLConnection con = url.openConnection();
-        //设置请求超时为5s
-        con.setConnectTimeout(5 * 1000);
-        // 输入流
-        InputStream is = con.getInputStream();
-        // 1K的数据缓冲
-        byte[] bs = new byte[1024];
-        // 读取到的数据长度
-        int len;
-        // 输出的文件流
-        File sf = new File(savePath + "/" + filename);
-//		if(!sf.exists()){ // 文件夹不存在即创建
-//			sf.mkdirs();
-//		}
-        OutputStream os = new FileOutputStream(sf);
-        // 开始读取
-        while ((len = is.read(bs)) != -1)
+        try
         {
-            os.write(bs, 0, len);
+            // 构造URL
+            URL url = new URL(urlString);
+            // 打开连接
+            URLConnection con = url.openConnection();
+            //设置请求超时为5s
+            con.setConnectTimeout(5 * 1000);
+            // 输入流
+            InputStream is = con.getInputStream();
+            // 1K的数据缓冲
+            byte[] bs = new byte[1024];
+            // 读取到的数据长度
+            int len;
+            // 输出的文件流
+            File sf = new File(savePath + "/" + filename);
+            // if(!sf.exists()){ // 文件夹不存在即创建
+            // 	sf.mkdirs();
+            // }
+            OutputStream os = new FileOutputStream(sf);
+            // 开始读取
+            while ((len = is.read(bs)) != -1)
+            {
+                os.write(bs, 0, len);
+            }
+            // 完毕，关闭所有链接
+            os.close();
+            is.close();
         }
-        // 完毕，关闭所有链接
-        os.close();
-        is.close();
+        catch (IOException e)
+        {
+            Logger.logMsg(4,"test");
+            Thread.setDefaultUncaughtExceptionHandler((thread, ex) -> {
+            });
+            e.printStackTrace();
+            java.util.logging.Logger.getGlobal().info(() -> ("message"));
+            Objects.requireNonNull(e,"e can't be null");
+        }
     }
 
     // main方法做为入口
